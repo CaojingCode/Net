@@ -19,7 +19,7 @@ package com.drake.net.scope
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import com.drake.net.Net
+import com.drake.net.utils.NetUtils
 import com.drake.net.utils.runMain
 import kotlinx.coroutines.*
 import java.io.Closeable
@@ -96,12 +96,11 @@ open class AndroidScope(
         return this
     }
 
-
     /**
      * 错误处理
      */
     open fun handleError(e: Throwable) {
-        Net.printStackTrace(e)
+        NetUtils.trace(e)
     }
 
     open fun cancel(cause: CancellationException? = null) {

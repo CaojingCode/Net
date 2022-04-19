@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
+import com.drake.net.NetConfig
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.UnknownHostException
@@ -28,11 +30,22 @@ fun Context.isNetworking(): Boolean {
 }
 
 object NetUtils {
+    //<editor-fold desc="日志">
+    /**
+     * 输出异常日志
+     * @see NetConfig.debug
+     */
+    fun trace(t: Throwable) {
+        if (NetConfig.debug) {
+            Log.d(NetConfig.TAG, NetUtils.getStackTraceString(t))
+        }
+    }
+
     /**
      * 返回异常堆栈日志字符串
      * 如果tr为null则返回空字符串
      */
-    internal fun getStackTraceString(tr: Throwable?): String {
+    private fun getStackTraceString(tr: Throwable?): String {
         if (tr == null) {
             return ""
         }
@@ -51,4 +64,5 @@ object NetUtils {
         pw.flush()
         return sw.toString()
     }
+    //</editor-fold>
 }

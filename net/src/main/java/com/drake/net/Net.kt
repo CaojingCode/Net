@@ -18,11 +18,9 @@
 
 package com.drake.net
 
-import android.util.Log
 import com.drake.net.interfaces.ProgressListener
 import com.drake.net.request.*
 import com.drake.net.tag.NetTag
-import com.drake.net.utils.NetUtils
 
 object Net {
 
@@ -245,7 +243,7 @@ object Net {
         NetConfig.runningCalls.forEach {
             val request = it.get()?.request() ?: return@forEach
             if (request.id == id) {
-                request.uploadListeners()?.remove(progressListener)
+                request.uploadListeners().remove(progressListener)
             }
         }
     }
@@ -274,22 +272,10 @@ object Net {
         NetConfig.runningCalls.forEach {
             val request = it.get()?.request() ?: return@forEach
             if (request.id == id) {
-                request.downloadListeners()?.remove(progressListener)
+                request.downloadListeners().remove(progressListener)
             }
         }
     }
 
-    //</editor-fold>
-
-    //<editor-fold desc="日志">
-    /**
-     * 输出异常日志
-     * @see NetConfig.logTag
-     */
-    fun printStackTrace(t: Throwable) {
-        if (NetConfig.logEnabled) {
-            Log.d(NetConfig.logTag, NetUtils.getStackTraceString(t))
-        }
-    }
     //</editor-fold>
 }
